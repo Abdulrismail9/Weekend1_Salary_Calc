@@ -5,6 +5,7 @@ $( document ).ready(readyNow);
 function readyNow() {
     console.log('Jquery working!');
     $('#submit').on('click', addEmployees);
+    $('#output').on('click', 'tr', deleteEmp );
 
     
 }// end of readyNow function 
@@ -18,6 +19,8 @@ class Employees{
         this.annualSalary = annualSalary;
     } // end of constructor
 } // end of Employees class
+
+let totalSalary = 0;
 // array to collect our employees 
 let employees = [];
 
@@ -53,15 +56,15 @@ function displayEmp(array) {
         <td>${employee.lasttName}</td> 
         <td>${employee.id}</td> 
         <td>${employee.title}</td>, 
-        <td>${employee.annualSalary}</td></tr>`
+        <td>${employee.annualSalary}</td>
+        <td><button id="deleteBtn" type="button" class="btn btn-danger">Delete</button></tr>`
     )
     }// end of loop
-    // totalMonthlyIncome();
+    deleteEmp();
 } // end of displayEmp function 
-// function to calculate total Monthly Income 
-// function totalMonthlyIncome() {
-//     console.log('totals working');
-//     let totals;
-//     if( employee.annualSalary )
 
-// }
+// this function will calculate the Total Monthly 
+function deleteEmp() {
+    console.log('employees delete button clicked');
+    $(this).remove();
+}
