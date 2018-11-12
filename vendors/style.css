@@ -1,5 +1,7 @@
-h1{
+.jumbotron{
     text-align: center;
+    background-color: black;
+    color: yellow;
 }
 .red{
     background-color: red;
