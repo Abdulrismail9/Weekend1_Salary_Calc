@@ -82,25 +82,6 @@ function deleteEmp() {
         }
     }
     displayEmp();
-    $(this).remove();
+    
 }
 
-// Function for adding total monthly
-// function totalMonthly() {
-//     console.log('adding total');
-//     let totalAmt = 0;
-//     for (let i = 0; i < employees.length; i++) {
-//         const emp = employees[i]
-//         totalAmt += number(emp.annualSalary);
-//         $('#salaryTotals').text(totalAmt / 12);
-//         console.log('totals working', totalAmt);
-//     }
-//     $('#salaryTotals').empty();
-//     $('#salaryTotals').append(`<div>Total Monthly: ${totalAmt}</div>`);
-//     //conditional to change color of totalMonthly whenever salary is above 20000
-//     if (totalAmt > 20000) {
-//         $('#salaryTotals').addClass('red');
-//     } else {
-//         $('#salaryTotals').removeClass('red');
-//     }
-// }
