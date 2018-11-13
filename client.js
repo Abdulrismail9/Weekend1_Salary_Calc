@@ -5,7 +5,7 @@ $(document).ready(readyNow);
 function readyNow() {
     console.log('Jquery working!');
     $('#submit').on('click', addEmployees);
-    $('#output').on('click', 'tr', deleteEmp);
+    $('#output').on('click', '.btn', deleteEmp);
 
 
 } // end of readyNow function 
@@ -36,68 +36,71 @@ function addEmployees() {
     )
     console.log('added', newEmp);
     employees.push(newEmp);
-    // emptying inputs 
-    $('#firstNameIn').empty(' ');
-    $('#lastNameIn').empty(' ');
-    $('#idIn').empty(' ');
-    $('#titleIn').empty(' ');
-    $('#annualSalaryIn').empty(' ');
-    displayEmp(employees);
+    
+    displayEmp();
 } // end of addEmployees function 
+
 // This function will display employee information on the dom 
-function displayEmp(array) {
+function displayEmp() {
+    let totalAmt = 0;
     console.log(' in displayEmp');
-
     $('#output').empty();
-
-    for (let employee of array) {
+    for (let i = 0; i < employees.length; i++ ) {
+        const employee = employees[i];
         $('#output').append(`<tr>
         <td>${employee.firstName}</td>
         <td>${employee.lastName}</td> 
-        <td class="empId">${employee.id}</td> 
+        <td>${employee.id}</td> 
         <td>${employee.title}</td>, 
-        <td class="annualSal">${employee.annualSalary}</td>
-        <td><button id="deleteBtn" type="button" class="btn btn-danger">Delete</button></tr>`)
+        <td>${employee.annualSalary}</td>
+        <td><button  type="button" class="btn btn-danger" id="${employee.id}">Delete</button></tr>`);
 
     } // end of loop
-
-    totalMonthly();
+    for( let i=0; i < employees.length; i++){
+        const emp = employees[i];
+        totalAmt += Number(emp.annualSalary);
+    }
+    $('#salaryTotals').text(totalAmt / 12);
+    if (totalAmt > 20000) {
+        $('#salaryTotals').addClass('red');
+    } else {
+        $('#salaryTotals').removeClass('red');
+    }
+    
 
 } // end of displayEmp function 
 
 // this function will calculate the Total Monthly 
 function deleteEmp() {
     console.log('employees delete button clicked');
-    // this will find annual salary and id to target 
-    const findSal = $(this).closest('tr').find('.annualSal').text();
-    console.log('findsal', findSal);
-    const findId = $(this).closest('tr').find('.empId').text();
-    console.log(findId);
-    // this will take out employees with the same id and annual salary 
-    for (let emp in employees) {
-        if (findSal == parseInt(employees[emp].annualSalary) && findId == parseInt(employees[emp].id)) {
-            employees.splice(emp, 1);
-            console.log('splice working');
+    let el = $(this).attr('id');
+    console.log('el', el);
+    for( let i=0; i < employees.length; i++) {
+        const emp = employees[i];
+        if(emp.id == el){
+            employees.splice(i, 1);
         }
     }
+    displayEmp();
     $(this).remove();
-    totalMonthly();
 }
 
 // Function for adding total monthly
-function totalMonthly() {
-    console.log('adding total');
-    let totalAmt = 0;
-    for (let i = 0; i < employees.length; i++) {
-        totalAmt += parseInt(employees[i].annualSalary);
-        console.log('totals working', totalAmt);
-    }
-    $('#salaryTotals').empty();
-    $('#salaryTotals').append(`<div>Total Monthly: ${totalAmt}</div>`);
-    //conditional to change color of totalMonthly whenever salary is above 20000
-    if (totalAmt > 20000) {
-        $('#salaryTotals').addClass('red');
-    } else {
-        $('#salaryTotals').removeClass('red');
-    }
-}
+// function totalMonthly() {
+//     console.log('adding total');
+//     let totalAmt = 0;
+//     for (let i = 0; i < employees.length; i++) {
+//         const emp = employees[i]
+//         totalAmt += number(emp.annualSalary);
+//         $('#salaryTotals').text(totalAmt / 12);
+//         console.log('totals working', totalAmt);
+//     }
+//     $('#salaryTotals').empty();
+//     $('#salaryTotals').append(`<div>Total Monthly: ${totalAmt}</div>`);
+//     //conditional to change color of totalMonthly whenever salary is above 20000
+//     if (totalAmt > 20000) {
+//         $('#salaryTotals').addClass('red');
+//     } else {
+//         $('#salaryTotals').removeClass('red');
+//     }
+// }
